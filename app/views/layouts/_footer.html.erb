@@ -5,9 +5,12 @@
   </small>
   <nav>
     <ul>
-      <li><%= link_to "About",   '#' %></li>
-      <li><%= link_to "Contact", static_pages_contact_url %></li>
+      <li><%= link_to "About",   about_path %></li>
+      <li><%= link_to "Contact", contact_path %></li>
       <li><a href="http://news.railstutorial.org/">News</a></li>
+      <% if yield(:legal)=='true' %>
+      <li><%= link_to "legal", root_path %></li>
+      <%end%>
     </ul>
   </nav>
 </footer>

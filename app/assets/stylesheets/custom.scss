@@ -1,6 +1,5 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
-
 /* universal */
 /* try commenting out some of the below bodies
 to see what they do. THIS IS JOSH SAYING THIS. DO IT! */
@@ -18,11 +17,10 @@ textarea  {
 }
 
 .center {
-    text-align: center;
-}
-
-.center h1  {
+  text-align: center;
+  h1{
     margin-bottom: 10px;
+  }
 }
 
 /* typography */
@@ -63,42 +61,39 @@ p {
   letter-spacing: -1px;
   padding-top: 9px;
   font-weight: bold;
+  
+  &:hover{
+    color: #000000;
+    text-decoration: none;
+  }
 }
 
-#logo:hover {
-    color: #fff;
-    text-decoration: none;
-}
 
 /* footer */
-
 footer {
   margin-top: 45px;
   padding-top: 5px;
-  border-top: 1px solid #eaeaea;
-  color: #777;
-}
-
-footer a {
-  color: #555;
-}
-
-footer a:hover {
-  color: #222;
-}
-
-footer small {
+  border-top: 1px solid #00ff00; /* used to be #eaeaea */
+  color: $gray-light;
+  a {
+    color: #0000ff;
+    &:hover{
+      color: #fff;
+    }
+  }
+  small {
   float: left;
-}
-
-footer ul {
+  }
+ul {
   float: right;
   list-style: none;
-}
-
-footer ul li {
+  
+  li {
   float: left;
   margin-left: 15px;
+  }
+
+}
 }
 
 /* Hide all images
