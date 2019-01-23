@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class StaticPagesControllerTest < ActionDispatch::IntegrationTest
-  
+  # why do i need @ why not just remove @ and make a variable without def something
   def setup
     @base_title = "Ruby on Rails Tutorial Sample App"
   end
