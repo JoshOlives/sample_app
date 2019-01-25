@@ -3,7 +3,16 @@
 /* universal */
 /* try commenting out some of the below bodies
 to see what they do. THIS IS JOSH SAYING THIS. DO IT! */
+$gray-medium-light: #eaeaea;
+$blue: #0000ff;
+$green: #00ff00;
 
+/* mixins, variables, etc. */
+@mixin box_sizing{
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
 body {
     padding-top: 60px;
 }
@@ -73,12 +82,12 @@ p {
 footer {
   margin-top: 45px;
   padding-top: 5px;
-  border-top: 1px solid #00ff00; /* used to be #eaeaea */
+  border-top: 1px solid $green; /* used to be #eaeaea */
   color: $gray-light;
   a {
-    color: #0000ff;
+    color: $blue;
     &:hover{
-      color: #fff;
+      color: $gray-medium-light;
     }
   }
   small {
@@ -96,6 +105,15 @@ ul {
 }
 }
 
+/* miscellaneous */
+
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
+  @include box_sizing;
+}
 /* Hide all images
 img {
   display: none;
