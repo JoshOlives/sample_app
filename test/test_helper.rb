@@ -7,6 +7,10 @@ class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
   include ApplicationHelper
-
+  
+  #Resturns true if test user is logged in
+  def is_logged_in?
+    !session[:user_id].nil? #ehhh what? like session helper bus still
+  end                       #dont need the user for test that way no inst var.
   # Add more helper methods to be used by all tests here...
 end

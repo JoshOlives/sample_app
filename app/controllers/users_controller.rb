@@ -10,9 +10,10 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params) #what?
     if @user.save
+      log_in @user
       flash[:success] = "Welcome :P"
       redirect_to @user #shorthand for user_url(@user) diff between url and path??
-    else
+     else
       render 'new'
     end
   end
