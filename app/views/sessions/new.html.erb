@@ -11,6 +11,12 @@
             <%= f.label :password %>
             <%= f.password_field :password, class: 'form-control' %>
             
+            <!-- go more into detail with this what does it all mean exactly? -->
+            <%= f.label :remember_me, class: "checkbox inline" do %>
+                <%= f.check_box :remember_me %>
+                <span>COOKIES? <%= image_tag("cookie monster jpg.png", alt: "COOKIE MONSTER", size: "30x30") %></span>
+            <% end %>
+            
             <%= f.submit "Log in", class: "btn btn-primary" %>
         <% end %>
         

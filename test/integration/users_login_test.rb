@@ -26,9 +26,24 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     delete logout_path
     assert_not is_logged_in?
     assert_redirected_to root_url
+    #Simulate a user clicking a logout in a second window
+    delete logout_path
     follow_redirect!
     assert_select "a[href=?]", login_path
     assert_select "a[href=?]", user_path(@user), false
     assert_select "a[href=?]", logout_path, count: 0
   end
+  
+  test 'check if cookies then no cookies' do
+    log_in_as(@user)
+    assert_not cookies['remember_token'].nil?
+    assert_equal cookies['remember_token'], assigns(:user).remember_token                                        
+                                              # why is there no remember_token
+                                              #attribute but there is a cookie
+    #log in without checkmarks              maybe cant access test user attributes
+    log_in_as(@user, remember_me: '0')      # cause its a virtual attribute
+    assert cookies['remember_token'].empty? #deleted not set to nil
+  end            
+  # need to put key as key instead of symbol cause its in a test
+
 end

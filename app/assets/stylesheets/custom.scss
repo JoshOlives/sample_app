@@ -177,6 +177,21 @@ input {
     color: $state-danger-text;
   }
 }
+
+.checkbox {
+  margin-top: -10px;
+  margin-bottom: 10px;
+  span {
+    margin-left: 20px;
+    font-weight: normal;
+  }
+}
+
+/* what does this mean exactly?*/
+#session_remember_me {
+  width: auto;
+  margin-left: 0;
+}
 /* Hide all images
 img {
   display: none;
