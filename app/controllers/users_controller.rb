@@ -3,9 +3,9 @@ class UsersController < ApplicationController
     @user = User.new #why do i need this
   end
   def show
-    @user = User.find(params[:id])
-    #debugger
-  end
+    @user = User.find(params[:id]) # id is what is after users/
+    #debugger                     #how can we make users non numbers.
+  end                             #in routes.RB probably
   
   def create
     @user = User.new(user_params) #what?
