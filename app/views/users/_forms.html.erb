@@ -1,0 +1,20 @@
+<!-- when doing a partial variables arent transferable -->
+<!-- either all variable use is in partial or view -->
+
+<%= form_for(@user, url: yield(:path)) do |f| %> <!-- why do i need the url here for it to work?-->
+<%= render 'shared/error_messages' %>
+            
+<%= f.label :name %> <!--whats the point fo the symbols for the labels?-->
+<%= f.text_field :name, class: 'form-control' %>
+            
+    <%= f.label :email %>
+<%= f.email_field :email, class: 'form-control' %>
+            
+<%= f.label :password %>
+<%= f.password_field :password, class: 'form-control' %>
+            
+<%= f.label :password_confirmation, "Confirmation" %>
+<%= f.password_field :password_confirmation, class: 'form-control' %>
+
+<%= f.submit yield(:button_text) , class: "btn btn-primary" %>
+        <% end %>

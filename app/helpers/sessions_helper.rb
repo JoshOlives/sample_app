@@ -41,4 +41,26 @@ module SessionsHelper
     cookies.permanent.signed[:user_id] = user.id
     cookies.permanent[:remember_token] = user.remember_token
   end
+  
+  def current_user?(user)
+    current_user == user
+  end
+  
+  # Redirects to stored location (or to the default).
+  def redirect_back_or(default)
+    forwarding_url = session[:forwarding_url] if "#{session[:forwarding_url]}".include? "users/#{@user.id}/edit" #URL CONTAINS MANY NUMBERS REMMEBER!
+    redirect_to(forwarding_url || default) # review this notation; nill if previous statement false (goes to default)
+    delete_store
+  end
+  
+  #stores the URL tring to be accessed
+  def store_location
+    session[:forwarding_url] = request.original_url if request.get?
+    #request.get? prevents saving patch
+    #e.g. user deletes cookies and submits edit post
+  end
+  
+  def delete_store
+    session.delete(:forwarding_url)
+  end
 end 

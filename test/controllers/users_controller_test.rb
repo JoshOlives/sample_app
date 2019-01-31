@@ -1,9 +1,36 @@
 require 'test_helper'
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
+  def setup
+    @user = users(:vanessa)
+    @other_user = users(:archer)
+  end
   test "should get new" do
     get signup_path
     assert_response :success
   end
-
+  
+  test 'redirect edit and update when not logged in' do
+    get edit_user_path(@user)
+    assert_redirected_to login_path
+    assert_not flash.empty?
+    patch user_path(@user), params: {user: { name: @user.name,
+                                          email: @user.email}}
+    assert_redirected_to login_path
+    assert_not flash.empty?
+    follow_redirect!
+  end
+  
+  test 'redirect to root when logged it' do
+    log_in_as(@other_user)
+    get edit_user_path(@user)
+    assert_redirected_to root_path
+    assert_not flash.empty?
+    patch user_path(@user), params: {user: { name: @user.name,
+                                          email: @user.email}}
+    assert_redirected_to root_path
+    assert_not flash.empty?
+    follow_redirect!
+  end
+  
 end

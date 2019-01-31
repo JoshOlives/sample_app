@@ -1,0 +1,16 @@
+<% provide(:button_text, 'Save changes') %>
+<% provide(:title, "edit user") %>
+<% provide(:path, user_path(@user)) %>
+<h1>Update your profile</h1> <!-- does h1 automatically center?-->
+
+<div class = "row">
+    <div class ="col-md-6 col-md-offset-3">
+
+            <%= render 'users/forms' %>
+        
+        <div class="gravatar_edit">
+            <%= gravatar_for @user %> <!-- calling the gravatar_for method that i wrote -->
+            <a href="http://gravatar.com/emails" target="_blank" rel="noopener">change profile pic</a>
+        </div> <!-- rel='noopener makes it secure, no pop ups?? -->
+    </div>
+</div>

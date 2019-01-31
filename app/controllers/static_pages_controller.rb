@@ -1,4 +1,5 @@
 class StaticPagesController < ApplicationController
+  before_action :delete_url
   def home
   end
 
@@ -12,5 +13,9 @@ class StaticPagesController < ApplicationController
   end
   
   def log_in
+  end
+  
+  def delete_url
+    delete_store
   end
 end
