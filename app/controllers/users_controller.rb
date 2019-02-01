@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:edit, :update]
+  before_action :logged_in_user, only: [:edit, :index, :update, :destroy]
   before_action :correct_user, only: [:edit, :update]
+  before_action :admin_user, only: [:destroy]
   
   def new
     @user = User.new #why do i need this
@@ -32,7 +33,8 @@ class UsersController < ApplicationController
       redirect_to @user
     else
       render 'edit'
-      #diff between render and redirect? redirect doesnt give params?
+      #diff between render and redirect? 
+      #doesnt give errors cause treating error as .now
     end
   end
   
@@ -54,7 +56,24 @@ class UsersController < ApplicationController
   #should i change it to @user???cause if entering restricted edit 
   #then logging into not that id for the restricted edit
   #that leads you to the home page not the profile nor edit page
+  def index
+    @users = User.paginate(page: params[:page], per_page: 15)
+  end
   
+  def destroy
+      name = User.find(params[:id]).name
+      User.find(params[:id]).delete
+      flash[:success] = "#{name} deleted"
+      redirect_to users_path #render wont change url. no action
+      name = nil
+  end
+  
+  def admin_user
+    unless current_user.admin?
+      flash[:error] = "YOU CHEECKY BASTARD"
+      redirect_to users_path
+    end
+  end
   private
   
     def user_params

@@ -55,15 +55,26 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     end
   end
   
-  test 'goes to profile page if stored then log in to id != stored' do
-    get edit_user_path(@user) # goes to log in
-    assert_redirected_to login_path
-    follow_redirect! 
-    assert_not session[:forwarding_url].nil?
+  #test 'goes to profile page if stored then log in to id != stored' do
+   # get edit_user_path(@user) # goes to log in
+   # assert_redirected_to login_path
+   # follow_redirect! 
+   # assert_not session[:forwarding_url].nil?
     #log in after restricted edit as other user
-    log_in_as(@other_user)
-    assert session[:forwarding_url].nil?
-    assert_redirected_to @other_user
-    assert flash.empty?
-  end
+ #   log_in_as(@other_user)
+ #   assert session[:forwarding_url].nil?
+ #   assert_redirected_to @other_user
+  #  assert flash.empty?
+ # end
+ 
+ test 'goes to profile page if stored then right edit to id != stored' do
+  get edit_user_path(@user) # goes to log in
+  assert_redirected_to login_path
+  follow_redirect! 
+  assert_not session[:forwarding_url].nil?
+  log_in_as(@other_user)
+  assert session[:forwarding_url].nil?
+  assert_redirected_to edit_user_path @other_user
+  assert flash.empty?
+ end
 end

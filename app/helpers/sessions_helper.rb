@@ -48,7 +48,10 @@ module SessionsHelper
   
   # Redirects to stored location (or to the default).
   def redirect_back_or(default)
-    forwarding_url = session[:forwarding_url] if "#{session[:forwarding_url]}".include? "users/#{@user.id}/edit" #URL CONTAINS MANY NUMBERS REMMEBER!
+    #forwarding_url = session[:forwarding_url] if "#{session[:forwarding_url]}".include? "users/#{@user.id}/edit" #URL CONTAINS MANY NUMBERS REMMEBER!
+    if !session[:forwarding_url].nil? 
+      forwarding_url = edit_user_path @user
+    end
     redirect_to(forwarding_url || default) # review this notation; nill if previous statement false (goes to default)
     delete_store
   end
