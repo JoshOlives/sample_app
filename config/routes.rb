@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   #how to make sow /edit doesnt dissapear after failed patch/put
   #can copy and paste urls able to edit other users
   resources :users#, :except => :update
+  resources :account_activations, only: [:edit]
+  #GONNA LEARN HOW TO MODIFY URL!!!
       # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
      
 end

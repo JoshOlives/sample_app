@@ -33,6 +33,10 @@ Rails.application.configure do
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
+  host = 'https://b6bdbc123a3a40548ad956180977ae51.vfs.cloud9.us-east-2.amazonaws.com/'
+  #does the host not matter??
+  #test host simply needs a domain not the domain of development!
+  config.action_mailer.default_url_options = { host: host}
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr

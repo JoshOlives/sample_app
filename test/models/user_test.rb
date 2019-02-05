@@ -81,6 +81,6 @@ test "email should be present" do
   end
   
   test 'authenticated? should return false for a user with nil digest' do
-    assert_not @user.authenticated?('') #doesnt matter what we put because error occurs before input is processed
+    assert_not @user.authenticated?(:remember, '') #doesnt matter what we put because error occurs before input is processed
   end
 end

@@ -8,15 +8,22 @@ class UsersController < ApplicationController
   end
   def show
     @user = User.find(params[:id]) # id is what is after users/
+    #return makes sure it doesnt go to view
+    # will only show activated users
+    #can make it so only activated users can look at others if 
+    #i want by current_user.activated?
+    redirect_to root_path and return unless @user.activated?
     #debugger                     #how can we make users non numbers.
   end                             #in routes.RB probably
   
   def create
     @user = User.new(user_params) #what?
     if @user.save
-      log_in @user
-      flash[:success] = "Welcome :P"
-      redirect_to @user #shorthand for user_url(@user) diff between url and path??
+      #log_in @user
+      #flash[:success] = "Welcome :P"
+      @user.send_activation_email
+      flash[:info] = "please check your email to activate your account"
+      redirect_to root_url #shorthand for user_url(@user) diff between url and path??
      else
       render 'new'
     end
@@ -57,7 +64,7 @@ class UsersController < ApplicationController
   #then logging into not that id for the restricted edit
   #that leads you to the home page not the profile nor edit page
   def index
-    @users = User.paginate(page: params[:page], per_page: 15)
+    @users = User.where(activated: true).paginate(page: params[:page], per_page: 15)
   end
   
   def destroy

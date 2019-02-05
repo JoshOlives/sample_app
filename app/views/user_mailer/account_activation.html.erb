@@ -1,0 +1,16 @@
+<h1>Sample App</h1>
+
+<p>
+  Hi <%= @user.name %>,
+</p>
+
+<p>
+Welcome to the Sample App! Click on the link below to activate your account:
+</p>
+<!-- is there spacing created between these two?, YES
+why is @user.activation_token not nil?
+maybe cause it hasnt gone to a diff action
+remember you can access the attr in console but
+only in that session-->
+<%= link_to "Activate", edit_account_activation_url(@user.activation_token, email: @user.email) %>
+<!-- how to make link open in new tab again? -->
