@@ -66,16 +66,16 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
-  host = 'https://fierce-wave-48431.herokuapp.com/'
+  host = 'fierce-wave-48431.herokuapp.com'
   # why do we not set protocol to https? like in development
-  config.action_mailer.default_url_options = { host: host}
+  config.action_mailer.default_url_options = { host: host }
   ActionMailer::Base.smtp_settings = {
-    :address => 'smtp.sendgrid.net',
-    :port   => '587',
+    :address        => 'smtp.sendgrid.net',
+    :port           => '587',
     :authentication => :plain,
-    :user_name => ENV['SENDGRID_USERNAME'],
-    :password => ENV['SENDGRID_PASSWORD'],
-    :domain   => 'heroku.com',
+    :user_name      => ENV['SENDGRID_USERNAME'],
+    :password       => ENV['SENDGRID_PASSWORD'],
+    :domain         => 'heroku.com',
     :enable_starttls_auto => true
   }
 

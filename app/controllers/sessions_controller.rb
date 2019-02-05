@@ -23,7 +23,8 @@ class SessionsController < ApplicationController
         message += 'Check your email for the activation link.'
         flash[:warning] = message
         redirect_to root_path
-        #@user.send_activation_email
+        #@user.send_activation_email doesnt work cause virtual attr
+        #they are gone after one action
       end
     else
       flash.now[:danger] = 'Invalid email/password combination'
