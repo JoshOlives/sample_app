@@ -6,6 +6,7 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
     @user = users(:vanessa)
     @other_user = users(:archer)
     @admin = users(:lana)
+    @unactivated = users(:malory)
   end
 
   test "index including pagination" do
@@ -14,7 +15,11 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
     assert_template 'users/index'
     assert_select 'div.pagination', count: 2
     User.paginate(page: 1, per_page: 15).each do |u|
-      assert_select 'a[href=?]', user_path(u), text: u.name
+      if !u.activated?
+        assert_select 'a[href=?]', user_path(u), count: 0
+      else
+        assert_select 'a[href=?]', user_path(u), text: u.name
+      end
       unless u == @admin
         assert_select 'a[href=?]', user_path(u), text: 'delete'
       end
@@ -36,6 +41,17 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
   test 'index as non-admin' do
     log_in_as(@user)
     get users_path
+    #tests for no link saying delete
+    #doesnt necessarily prevent a 'delete' link
     assert_select 'a', text: 'delete', count: 0
+  end
+  
+  test 'cant access unactivate user prof page' do
+    log_in_as(@user)
+    get user_path(@unactivated)
+    assert_redirected_to root_path
+    follow_redirect!
+    assert flash.empty?
+    assert_template 'static_pages/home'
   end
 end

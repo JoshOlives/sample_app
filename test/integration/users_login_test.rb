@@ -3,6 +3,7 @@ require 'test_helper'
 class UsersLoginTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:vanessa)
+    @other_user = users(:archer)
   end
   test 'checking log in page' do
     get login_path
@@ -46,4 +47,19 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
   end            
   # need to put key as key instead of symbol cause its in a test
 
+  test 'logging in another tab and tring to log in another that hasnt updated' do
+    log_in_as(@user, remember_me: '0')
+    assert_redirected_to @user
+    assert cookies['remember_token'].nil?
+    log_in_as(@user,password: '', remember_me: '1')
+    assert_not cookies['remember_token'].empty?
+    assert_redirected_to @user
+    log_in_as(@user,password: '', remember_me: '0')
+    assert cookies['remember_token'].empty?
+    log_in_as(@other_user, remember_me: '1')
+    assert_not flash.nil?
+    #nont really the best way cause they could have someone else's cookies
+    assert cookies['remember_token'].empty?
+    assert_redirected_to root_path
+  end
 end

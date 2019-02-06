@@ -12,6 +12,8 @@ class UsersController < ApplicationController
     # will only show activated users
     #can make it so only activated users can look at others if 
     #i want by current_user.activated?
+    
+    #NOTE THE AND HERE
     redirect_to root_path and return unless @user.activated?
     #debugger                     #how can we make users non numbers.
   end                             #in routes.RB probably

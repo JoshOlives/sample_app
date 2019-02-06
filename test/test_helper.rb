@@ -25,5 +25,7 @@ class ActionDispatch::IntegrationTest #what was the point of this?
   
   def log_in_as(user, password: 'password', remember_me: '1')
     post login_path, params: { session: {email: user.email, password: password, remember_me: remember_me}}
+    #notice how : are not used inside method for paremeter keys
+    #keys in parameters are keywords 'specific'
   end
 end

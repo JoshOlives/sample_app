@@ -33,7 +33,7 @@ module SessionsHelper
     session.delete(:user_id) #does it have to do with destroy action?
     @current_user = nil
   end
-  
+
   #not hacker proof if attacker has both cookies it can get access until logout!!
   #how to fix this???
   def remember(user)

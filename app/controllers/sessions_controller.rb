@@ -1,20 +1,26 @@
 class SessionsController < ApplicationController
   def new
   end
-  
+  #REFACTOR THIS CODE!!!!!!!!!!!!!
   #authenticate (has_sec_pass) and authenticated (custome)
   def create
     #making instance variable to implement in users_login test
     # used by using assigns(:user) for virtual attr
     @user = User.find_by(email: params[:session][:email].downcase)
-    if @user && @user.authenticate(params[:session][:password])
+    if logged_in? && current_user != @user && @user && @user.authenticate(params[:session][:password])
+      flash[:warning] = 'please log out to access another account'
+      redirect_to root_path
+      # should i put remember/forget line here?
+      return
+    elsif logged_in? # if current_user = @user or @user is not in database
+      redirect_to current_user
+      params[:session][:remember_me] == '1' ? remember(current_user) : forget(current_user)
+      return
+    end
+    if (@user && @user.authenticate(params[:session][:password]))
       if @user.activated?
         log_in(@user) #not logged in unless activated
-        if params[:session][:remember_me] == '1'
-          remember @user
-        else
-          forget @user # deletes cookies even if had it previously
-        end
+        params[:session][:remember_me] == '1' ? remember(@user) : forget(@user)
       # this if statement is the same as
       #params[:session][:remember_me] == '1' ? remember(user) : forget(user)
         redirect_back_or @user #short for user_path(user)
