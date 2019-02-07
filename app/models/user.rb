@@ -1,6 +1,6 @@
 class User < ApplicationRecord
     #assigning attributes not in the database
-    attr_accessor :remember_token, :activation_token
+    attr_accessor :remember_token, :activation_token, :reset_token
     before_save :downcase_email # self keyword is optional on right hand side
     before_create :create_activation_digest
     
@@ -52,6 +52,22 @@ class User < ApplicationRecord
     def send_activation_email
       UserMailer.account_activation(self).deliver_now
     end
+    
+    # sets the passwrod reset attr
+    def reset
+        self.reset_token = User.new_token
+        self.update_attributes(reset_digest: User.digest(reset_token),
+                              reset_sent_at: Time.zone.now)
+    end
+    
+    def send_password_reset_email
+      UserMailer.password_reset(self).deliver_now
+    end
+    
+    def password_reset_expired?
+      reset_sent_at < 2.hours.ago
+    end
+    
     private
       def create_activation_digest
         self.activation_token = User.new_token
@@ -61,4 +77,5 @@ class User < ApplicationRecord
       def downcase_email
         email.downcase!
       end
+      
 end

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+
+
   root 'static_pages#home' #needs action not url thats why home_path doesnt work
   get '/help', to: 'static_pages#help', as: 'help'
   get '/about', to: 'static_pages#about'
@@ -13,6 +15,7 @@ Rails.application.routes.draw do
   #can copy and paste urls able to edit other users
   resources :users#, :except => :update
   resources :account_activations, only: [:edit]
+  resources :password_resets, only: [:edit, :create, :new, :update]
   #GONNA LEARN HOW TO MODIFY URL!!!
       # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
      

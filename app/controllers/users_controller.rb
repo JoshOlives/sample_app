@@ -37,6 +37,7 @@ class UsersController < ApplicationController
 
 #updates password too prob want to make it so need previous password
   def update
+    #why is @user not defined
     if @user.update_attributes(user_params)#not given!!!
       flash[:success] = "Changes saved"
       redirect_to @user
