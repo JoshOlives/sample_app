@@ -40,6 +40,13 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     @user.reload
     assert_equal @user.name, name
     assert_equal @user.email, email
+    #does it truley allow empty?
+    patch user_path(@user), params: {user: {name: 'm', email: email, password: "",
+                                    password_confirmation: ""}}
+    assert_redirected_to @user
+    @user.reload
+    assert_equal 'm', @user.name
+    assert_equal @user.email, email
   end
   
   test 'store deletes after a redirect from login from restricted edit' do

@@ -50,7 +50,7 @@ module SessionsHelper
   def redirect_back_or(default)
     #forwarding_url = session[:forwarding_url] if "#{session[:forwarding_url]}".include? "users/#{@user.id}/edit" #URL CONTAINS MANY NUMBERS REMMEBER!
     if !session[:forwarding_url].nil? 
-      forwarding_url = edit_user_path @user
+      forwarding_url = edit_user_path @user #session[:forwarding_url] chenged from this to redirec to edit no matter what edit one was trying to access
     end
     redirect_to(forwarding_url || default) # review this notation; nill if previous statement false (goes to default)
     delete_store

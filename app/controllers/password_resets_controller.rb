@@ -1,5 +1,6 @@
 class PasswordResetsController < ApplicationController
-  before_action :get_user,  only: [:edit, :update]
+  before_action :get_user,  only: [:edit]#, :update]
+  before_action :get_user_update,  only: [ :update]
   before_action :valid_user,  only: [:edit, :update]
   before_action :check_expiration, only: [:edit, :update]
   
@@ -25,8 +26,7 @@ class PasswordResetsController < ApplicationController
 
   def update
     #only email is directly in params
-    if params[:user][:password].empty? #empty works to... remember
-                      #nil is empty but empty is not nil
+    if params[:user][:password].empty? #automatically sends empty string wont be nil
       @user.errors.add(:password, "can't be empty") #how does the key play a role in this
       render 'edit'
     elsif @user.update_attributes(user_params)  #valid password
@@ -41,7 +41,13 @@ class PasswordResetsController < ApplicationController
   
     private
     def get_user
+      #changes according to what apple has saved?
+      #in the upfdating process, overwriting it?
       @user = User.find_by(email: params[:email])
+    end
+    
+    def get_user_update
+      @user = User.find_by(email: params[:user][:email])
     end
     
     def valid_user

@@ -41,21 +41,22 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
     get edit_password_reset_path(user.reset_token, email: user.email)
     assert_template 'password_resets/edit'
     #go over below
-    assert_select "input[name=email][type=hidden][value=?]", user.email
+    assert_select "input[id=user_email][type=hidden][value=?]", user.email
     #empty password, test for blank password?
-    patch password_reset_path(user.reset_token), params: {email: user.email, user: {
+    patch password_reset_path(user.reset_token), params: { user: {
+                                                    email: user.email,
                                                     password: '',
                                                     password_confirmation: ''}}
     assert_template 'password_resets/edit'
     assert_select 'div#error_explanation' #no flash
     #invalid password
-    patch password_reset_path(user.reset_token), params: {email: user.email, user: {
+    patch password_reset_path(user.reset_token), params: { user: {email: user.email,
                                                       password: 'dddsss',
                                                       password_confirmation: 'dddssd'}}
     assert_template 'password_resets/edit'
     assert_select 'div#error_explanation' #no flash
     #valid password
-    patch password_reset_path(user.reset_token), params: {email: user.email, user: {
+    patch password_reset_path(user.reset_token), params: { user: {email: user.email,
                                                               password: 'passwords',
                                                     password_confirmation: 'passwords'}}
     
@@ -74,15 +75,15 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
     get edit_password_reset_path(user.reset_token, email: user.email)
     assert_redirected_to new_password_reset_path
     follow_redirect!
-    assert_match /expired/i, response.body 
-    patch password_reset_path(user.reset_token), params: {email: user.email, user:
-                                              {password: 'passwords',
+    assert_match(/expired/i, response.body) 
+    patch password_reset_path(user.reset_token), params: { user:
+                                              {email: user.email, password: 'passwords',
                                                     password_confirmation: 'passwords'}}
     assert_response :redirect
     assert_redirected_to new_password_reset_path
     follow_redirect! #what does the ! do?
     #i guess ruby infers that by doing an inequality time
     #that is an expiration test
-    assert_match /expired/i, response.body #looks for expired in html body (case insensitive)
+    assert_match(/expired/i, response.body) #looks for expired in html body (case insensitive)
   end 
 end
