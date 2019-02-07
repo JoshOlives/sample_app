@@ -41,25 +41,24 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
     get edit_password_reset_path(user.reset_token, email: user.email)
     assert_template 'password_resets/edit'
     #go over below
-    assert_select "input[id=user_email][type=hidden][value=?]", user.email
+    assert_select "input[id=user_fuck][type=hidden][value=?]", user.email
     #empty password, test for blank password?
     patch password_reset_path(user.reset_token), params: { user: {
-                                                    email: user.email,
+                                                    fuck: user.email,
                                                     password: '',
                                                     password_confirmation: ''}}
     assert_template 'password_resets/edit'
     assert_select 'div#error_explanation' #no flash
     #invalid password
-    patch password_reset_path(user.reset_token), params: { user: {email: user.email,
+    patch password_reset_path(user.reset_token), params: { user: {fuck: user.email,
                                                       password: 'dddsss',
                                                       password_confirmation: 'dddssd'}}
     assert_template 'password_resets/edit'
     assert_select 'div#error_explanation' #no flash
     #valid password
-    patch password_reset_path(user.reset_token), params: { user: {email: user.email,
+    patch password_reset_path(user.reset_token), params: { user: {fuck: user.email,
                                                               password: 'passwords',
                                                     password_confirmation: 'passwords'}}
-    
     assert_nil user.reload.reset_digest
     assert_redirected_to(user)
     assert is_logged_in?
@@ -77,7 +76,7 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_match(/expired/i, response.body) 
     patch password_reset_path(user.reset_token), params: { user:
-                                              {email: user.email, password: 'passwords',
+                                              {fuck: user.email, password: 'passwords',
                                                     password_confirmation: 'passwords'}}
     assert_response :redirect
     assert_redirected_to new_password_reset_path

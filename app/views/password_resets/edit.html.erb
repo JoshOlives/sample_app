@@ -6,7 +6,8 @@
         <%= form_for(@user, url: password_reset_path(params[:id])) do |f| %> 
             <%= render 'shared/error_messages' %>
             
-            <%= f.hidden_field :email, value: @user.email %>
+            <!-- try another key other than email, to maybe stop hijacking -->
+            <%= f.hidden_field :fuck, value: @user.email %>
             
             <%= f.label :password %>
             <%= f.password_field :password, class: 'form-control' %>
