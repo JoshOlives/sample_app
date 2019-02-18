@@ -67,7 +67,7 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.delivery_method = :smtp
-  host = 'https://fierce-wave-48431.herokuapp.com'
+  host = 'https://greatvaluetwitter.herokuapp.com'
   # why do we not set protocol to https? like in development
   config.action_mailer.default_url_options = { host: host, protocol: 'https'  }
   ActionMailer::Base.smtp_settings = {
