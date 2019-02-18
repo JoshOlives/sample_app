@@ -17,3 +17,11 @@ User.create!(name:  "Joshua Olivares",
              activated: true,
              activated_at: Time.zone.now)
 end
+
+users = User.order(:created_at).take(6)
+50.times do
+    #why arent all the sentences 5 words long?
+    content = Faker::Hipster.sentence(5,false,5)
+    #good review of other way to make block
+    users.each { |user| user.microposts.create!(content: content) }
+end

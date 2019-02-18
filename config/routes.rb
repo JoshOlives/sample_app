@@ -16,6 +16,9 @@ Rails.application.routes.draw do
   resources :users#, :except => :update
   resources :account_activations, only: [:edit]
   resources :password_resets, only: [:edit, :create, :new, :update]
+  #add update?
+  resources :microposts, only: [ :destroy]
+  post '/', to: 'microposts#create', as: 'microposts'
   #GONNA LEARN HOW TO MODIFY URL!!!
       # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
      

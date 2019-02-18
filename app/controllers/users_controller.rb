@@ -16,7 +16,9 @@ class UsersController < ApplicationController
     #NOTE THE AND HERE
     redirect_to root_path and return unless @user.activated?
     #debugger                     #how can we make users non numbers.
-  end                             #in routes.RB probably
+                                   #in routes.RB probably
+    @microposts = @user.microposts.paginate(page: params[:page])
+  end                            
   
   def create
     @user = User.new(user_params) #what?
@@ -48,13 +50,6 @@ class UsersController < ApplicationController
     end
   end
   
-  def logged_in_user
-    unless logged_in?
-      store_location #only works with edit? cause only for gets not patches
-      flash[:danger] = "please log in."
-      redirect_to login_url
-    end
-  end
   
   def correct_user
     @user = User.find params[:id] #follows id of user, params[:user][:id]

@@ -28,4 +28,5 @@ class ActionDispatch::IntegrationTest #what was the point of this?
     #notice how : are not used inside method for paremeter keys
     #keys in parameters are keywords 'specific'
   end
+  
 end

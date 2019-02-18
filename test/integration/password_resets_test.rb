@@ -41,6 +41,7 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
     get edit_password_reset_path(user.reset_token, email: user.email)
     assert_template 'password_resets/edit'
     #go over below
+    #changed it to id from name cause extra [] where fucking things up. why tho?
     assert_select "input[id=user_fuck][type=hidden][value=?]", user.email
     #empty password, test for blank password?
     patch password_reset_path(user.reset_token), params: { user: {

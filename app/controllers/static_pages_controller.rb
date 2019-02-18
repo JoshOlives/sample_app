@@ -1,6 +1,11 @@
 class StaticPagesController < ApplicationController
   before_action :delete_url
   def home
+    if logged_in?
+      #why do i have problem with @feed_items but not @microposts
+      @micropost = current_user.microposts.build
+      #@feed_items in feed partial to fix problem
+    end
   end
 
   def help

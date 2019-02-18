@@ -51,6 +51,10 @@ class PasswordResetsController < ApplicationController
     end
     
     def valid_user
+      #is ios sending two patch requests one for the actual user
+      #and one for the save user? but what params would be sent for the saved user?
+      #how is it assigning @user to the saved account?
+      #try hashing last part of conditional to confirm ios hypothesis
       unless (@user && @user.activated? && @user.authenticated?(:reset, params[:id]))
         flash[:warning] = 'please activate your account first or fix url'
         redirect_to root_path 

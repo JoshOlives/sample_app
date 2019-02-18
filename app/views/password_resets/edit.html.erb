@@ -4,9 +4,10 @@
     <div class = "col-md-6 col-md-offset-3">
         <!-- id patch has to match edit id? -->
         <%= form_for(@user, url: password_reset_path(params[:id])) do |f| %> 
-            <%= render 'shared/error_messages' %>
-            
-            <!-- try another key other than email, to maybe stop hijacking -->
+            <%= render 'shared/error_messages', object: f.object %>
+        
+            <!-- make hidden field visible for debug -->
+            <!-- this time name it :fuck but outside [user] -->
             <%= f.hidden_field :fuck, value: @user.email %>
             
             <%= f.label :password %>

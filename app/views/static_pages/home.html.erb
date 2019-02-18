@@ -1,19 +1,6 @@
-<div class="center jumbotron">
-  <h1>Welcome to the Sample app</h1>
-  
-  <h2>
-    This is the home page for the
-    <a href="http://www.railstutorial.org/">Ruby on Rails Tutorial</a>
-    sample application.
-  </h2>
-  
-  <%= link_to "Sign up now!", signup_path , class: "btn btn-lg btn-primary" %>
-</div>
+<% if logged_in? %>
+<%= render 'static_pages/logged_in' %>
+<% else %>
+<%= render 'static_pages/not_logged_in' %>
 
-<!-- <%= link_to image_tag("rails.png", alt: "Rails logo"),
-    'https://fierce-wave-48431.herokuapp.com/' %>  -->
-
-<%= link_to image_tag("kitten.png", alt: "Kitten", size: '1140x410'),
-    signup_path %>
-    <!-- looks like div adds seperation but no line in between? This is how you 
-    add comments in html! -->
+<%end%>
