@@ -4,13 +4,15 @@ class PictureUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
   process resize_to_limit: [400,400] #only affects images that are too big
   # Choose what kind of storage to use for this uploader:
-  if Rails.env.production?
+  #FIX THIS, will this save uploaded images to local machine?
+  #thats kind of annoying
+  #if Rails.env.production?
     #stores upload in cloud
-    storage :fog
-  else
+    #storage :fog
+  #else
     #stores upload in local file system
     storage :file
-  end
+  #end
   # storage :fog
 
   # Override the directory where uploaded files will be stored.
