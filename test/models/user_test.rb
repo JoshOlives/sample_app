@@ -91,4 +91,33 @@ test "email should be present" do
       @user.destroy
     end
   end
+  
+  test 'should follow and unfollow a user' do
+    user = users(:vanessa)
+    archer = users(:archer)
+    assert_not user.following?(archer)
+    user.follow(archer)
+    assert user.following?(archer)
+    assert archer.followed_by?(user)
+    user.unfollow(archer)
+    assert_not user.following?(archer)
+  end
+  
+  test 'feed should have the right posts' do
+    vanessa = users(:vanessa)
+    archer = users(:archer)
+    lana = users(:lana)
+    #posts from followed user
+    lana.microposts.each do |p_f|
+      assert vanessa.feed.include?(p_f)
+    end
+    #posts from self
+    vanessa.microposts.each do |p_s|
+      assert vanessa.feed.include?(p_s)
+    end
+    #posts from follower, shouldnt show
+    archer.microposts.each do |p_u|
+      assert_not vanessa.feed.include?(p_u)
+    end
+  end
 end

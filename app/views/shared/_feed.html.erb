@@ -1,3 +1,4 @@
+<!-- for home, microposts view for profile -->
 <% @feed_items = current_user.feed.paginate(page: params[:page]) %>
 <!-- security prob having instance var here?-->
 <% if @feed_items.any? %> <!-- remember about the any? menthod!-->

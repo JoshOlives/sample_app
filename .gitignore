@@ -26,4 +26,6 @@
 /spring/*.pid
 
 #ignore uploaded test images
+#if commment out below and push and then uncomment and push it will be the same
+# as in (uploads wont show up)
 /public/uploads
