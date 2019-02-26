@@ -3,7 +3,7 @@ class CreateMicroposts < ActiveRecord::Migration[5.1]
     create_table :microposts do |t|
       t.text :content
       #go over foreign key and indices
-      t.references :user, foreign_key: true
+      t.references :user, foreign_key: true #uses user_id as foreign_key?
 
       t.timestamps
     end

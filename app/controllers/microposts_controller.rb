@@ -11,7 +11,7 @@ class MicropostsController < ApplicationController
       #@feed_items = [] crappy solution why is @microposts not forgetton?????
       render 'static_pages/home' #render doesnt go through controller method again
     end                         #straight to view??? what about @microposts?
-  end                          #MAYBE CAUSE IT WAS POSTED, this is why render is meh
+  end                          #MAYBE CAUSE IT WAS POSTED and feed_items wasnt, this is why render is meh
     #also fix home formatting
   def destroy
     @micropost.destroy

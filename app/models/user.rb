@@ -1,6 +1,15 @@
 class User < ApplicationRecord
     #assigning attributes not in the database
     has_many :microposts, dependent: :destroy
+    has_many :active_relationships, class_name: "Relationship", foreign_key: "follower_id",
+                                  dependent: :destroy
+    has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id",
+                                  dependent: :destroy
+    #used followed_id as foreign key, automatically dependent since through?
+    #not in database so dependent is not required
+    has_many :following, through: :active_relationships, source: :followed
+    has_many :followers, through: :passive_relationships #, source: :follower optional
+    
     attr_accessor :remember_token, :activation_token, :reset_token
     before_save :downcase_email # self keyword is optional on right hand side
     before_create :create_activation_digest
@@ -69,9 +78,47 @@ class User < ApplicationRecord
       reset_sent_at < 2.hours.ago
     end
     
-    def feed
-      Micropost.where("user_id = ?", id)
+    #tutorial feed, grabs from database, organizes all of them
+  def feed
+      #(following_ids = following.map(&:id)) == following_ids ;cause of active record
+      #? does interpolation so you dont need to join array of ids into a string
+   #more efficient cause doesnt have to pull everything into an array
+   following_ids = "SELECT followed_id FROM relationships
+                    WHERE follower_id = :user_id"
+   Micropost.where("user_id IN (#{following_ids}) OR user_id = :user_id", 
+                      user_id: id)
+  end
+    
+#    my feed, organizes them by time in packs, bad
+#    def feed
+#      feed = Micropost.where("user_id = ?", id)
+      #changes activerecord to an array, how to make it remain active record
+#      self.following.each do |f|
+#       f_posts = Micropost.where("user_id = ?", f.id)
+#        feed += f_posts
+#      end
+#      feed
+#     end
+
+    #remember about self
+    #follows a user.
+    def follow(other_user)
+      following << other_user
     end
+    
+    #Unfollow a user
+    def unfollow(other_user)
+      following.delete(other_user)
+    end
+    
+    def following?(other_user)
+      following.include?(other_user)
+    end
+    
+    def followed_by?(other_user)
+      followers.include?(other_user)
+    end
+    
     private
       def create_activation_digest
         self.activation_token = User.new_token

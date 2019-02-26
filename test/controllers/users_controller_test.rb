@@ -76,4 +76,19 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_not flash.nil? # isnt nil till next action
     assert_template 'sessions/new'
   end
+  
+  test 'should redirect following and followers when not logged in' do
+    get following_user_path(@user)
+    assert_redirected_to login_path
+    get followers_user_path(@user)
+    assert_redirected_to login_path
+  end
+  
+  test ' following and followers link should work' do
+    log_in_as(@user)
+    get following_user_path(@user)
+    assert_template 'users/show_follow'
+    get followers_user_path(@user)
+    assert_template 'users/show_follow'
+  end
 end

@@ -1,3 +1,5 @@
+#required cause feed was changed from active record to array
+require 'will_paginate/array' 
 class StaticPagesController < ApplicationController
   before_action :delete_url
   def home

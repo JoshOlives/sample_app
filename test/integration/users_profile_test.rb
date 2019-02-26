@@ -10,6 +10,8 @@ class UsersProfileTest < ActionDispatch::IntegrationTest
   test 'checking pagination and microposts on prof page' do
     log_in_as(@user)
     get user_path(@user)
+    assert_select 'strong', "#{@user.followers.count}", count: 1
+    assert_select 'strong', "#{@user.following.count}", count: 1
     @body = response.body
     assert_template 'users/show'
     assert_select 'div.pagination', count: 1
