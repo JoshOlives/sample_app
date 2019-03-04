@@ -20,7 +20,7 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
       else
         assert_select 'a[href=?]', user_path(u), text: u.name
       end
-      unless u == @admin
+      unless u == @admin || !u.activated?
         assert_select 'a[href=?]', user_path(u), text: 'delete'
       end
     end
