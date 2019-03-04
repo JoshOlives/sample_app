@@ -6,14 +6,13 @@ class PictureUploader < CarrierWave::Uploader::Base
   # Choose what kind of storage to use for this uploader:
   #FIX THIS, will this save uploaded images to local machine?
   #thats kind of annoying
-  #if Rails.env.production?
+  if Rails.env.production?
     #stores upload in cloud
-    #storage :fog
-  #else
+    storage :fog
+  else
     #stores upload in local file system
     storage :file
-  #end
-  # storage :fog
+  end
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
