@@ -128,6 +128,7 @@ class User < ApplicationRecord
       unless (u == a) || (u.following?(a))
         u.follow(User.find_by(email: "joshuaolivares@utexas.edu"))
       end
+    end
   end
     
     private
