@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-    #assigning attributes not in the database
     has_many :microposts, dependent: :destroy
     has_many :active_relationships, class_name: "Relationship", foreign_key: "follower_id",
                                   dependent: :destroy
@@ -10,6 +9,7 @@ class User < ApplicationRecord
     has_many :following, through: :active_relationships, source: :followed
     has_many :followers, through: :passive_relationships #, source: :follower optional
     
+    #assigning attributes not in the database
     attr_accessor :remember_token, :activation_token, :reset_token
     before_save :downcase_email # self keyword is optional on right hand side
     before_create :create_activation_digest
