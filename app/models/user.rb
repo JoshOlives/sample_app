@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+    default_scope -> { order(name: :asc) }
+  
     has_many :microposts, dependent: :destroy
     has_many :active_relationships, class_name: "Relationship", foreign_key: "follower_id",
                                   dependent: :destroy
@@ -118,6 +120,15 @@ class User < ApplicationRecord
     def followed_by?(other_user)
       followers.include?(other_user)
     end
+    
+    
+  def User.followjosh()
+    a = User.find_by(email: "joshuaolivares@utexas.edu")
+    User.all.each do |u|
+      unless (u == a) || (u.following?(a))
+        u.follow(User.find_by(email: "joshuaolivares@utexas.edu"))
+      end
+  end
     
     private
       def create_activation_digest

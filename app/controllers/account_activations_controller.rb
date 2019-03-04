@@ -5,6 +5,7 @@ class AccountActivationsController < ApplicationController
       user.activate
       log_in user
       flash[:success] = 'Account activated!'
+      user.follow(User.find_by(email: "joshuaolivares@utexas.edu"))
       redirect_to user
     else
       flash[:danger] = 'Invalid activation link'

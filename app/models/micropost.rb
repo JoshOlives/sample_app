@@ -8,6 +8,7 @@ class Micropost < ApplicationRecord
   mount_uploader :picture, PictureUploader
   validates :user_id, presence: true
   validates :content, length: {maximum: 140}, presence: true, if: Proc.new { |post| !post.picture? }
+                                                                  # same as -> { !picture? }
   validate :picture_size
   
   private
