@@ -1,16 +1,17 @@
 class User < ApplicationRecord
-    default_scope -> { order(name: :asc) }
-  
     has_many :microposts, dependent: :destroy
     has_many :active_relationships, class_name: "Relationship", foreign_key: "follower_id",
                                   dependent: :destroy
     has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id",
                                   dependent: :destroy
+                                  
     #used followed_id as foreign key, automatically dependent since through?
     #not in database so dependent is not required
     has_many :following, through: :active_relationships, source: :followed
     has_many :followers, through: :passive_relationships #, source: :follower optional
     
+    #order
+    default_scope -> { order(name: :asc) }
     #assigning attributes not in the database
     attr_accessor :remember_token, :activation_token, :reset_token
     before_save :downcase_email # self keyword is optional on right hand side
