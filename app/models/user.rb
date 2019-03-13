@@ -11,7 +11,9 @@ class User < ApplicationRecord
     has_many :followers, through: :passive_relationships #, source: :follower optional
     
     #order
+    scope :activated, -> { where(activated: true) }
     default_scope -> { order(name: :asc) }
+    
     #assigning attributes not in the database
     attr_accessor :remember_token, :activation_token, :reset_token
     before_save :downcase_email # self keyword is optional on right hand side
@@ -82,6 +84,7 @@ class User < ApplicationRecord
     end
     
     #tutorial feed, grabs from database, organizes all of them
+    #returns active record
   def feed
       #(following_ids = following.map(&:id)) == following_ids ;cause of active record
       #? does interpolation so you dont need to join array of ids into a string
@@ -101,7 +104,7 @@ class User < ApplicationRecord
 #        feed += f_posts
 #      end
 #      feed
-#     end
+#     end returns array
 
     #remember about self
     #follows a user.

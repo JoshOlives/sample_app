@@ -4,11 +4,16 @@ class Micropost < ApplicationRecord
   #is the proc called automatically when the method is ran?
   #go over taby ->
   #this is what orders the list when pagination occurs
+  #gets post object and does post.order(created_at: :desc)}
+  
+  #with lambda it reavulates the scope each time its called
+  #without it doesnt
   default_scope -> { order(created_at: :desc) }
   mount_uploader :picture, PictureUploader
   validates :user_id, presence: true
   validates :content, length: {maximum: 140}, presence: true, if: Proc.new { |post| !post.picture? }
                                                                   # same as -> { !picture? }
+                                                                  #automitically puts post object in front
   validate :picture_size
   
   private

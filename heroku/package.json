@@ -1,7 +1,7 @@
 {
   "name": "heroku",
   "description": "CLI to interact with Heroku",
-  "version": "7.22.2",
+  "version": "7.22.3",
   "author": "Jeff Dickey @jdxcode",
   "bin": {
     "heroku": "./bin/run"
@@ -236,7 +236,7 @@
     },
     "update": {
       "node": {
-        "version": "11.9.0"
+        "version": "11.10.1"
       },
       "s3": {
         "xz": true,

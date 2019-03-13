@@ -19,7 +19,9 @@ User.create!(name:  "Joshua Olivares",
 end
 
 #Microposts
-users = User.order(:created_at).take(6)
+#default is :asc, old to new
+#reorder or unscoped overrides default_scope
+users = User.unscoped.order(:created_at).take(6)
 50.times do
     #why arent all the sentences 5 words long?
     content = Faker::Hipster.sentence(5,false,5)

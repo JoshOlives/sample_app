@@ -48,7 +48,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     assert_not user.activated_at.nil?
     #assert_redirected_to @user need fixture
     follow_redirect!
-    assert_template 'users/show'
+    assert_template 'static_pages/home'
     assert_select 'div.alert-success'
   end
 end

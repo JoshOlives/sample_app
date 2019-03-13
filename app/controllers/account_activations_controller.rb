@@ -9,7 +9,7 @@ class AccountActivationsController < ApplicationController
       if !a.nil?
         user.follow(User.find_by(email: "joshuaolivares@utexas.edu"))
       end
-      redirect_to user
+      redirect_to root_path
     else
       flash[:danger] = 'Invalid activation link'
       redirect_to root_path

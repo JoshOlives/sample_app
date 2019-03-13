@@ -2,9 +2,12 @@
 <% @feed_items = current_user.feed.paginate(page: params[:page]) %>
 <!-- security prob having instance var here?-->
 <% if @feed_items.any? %> <!-- remember about the any? menthod!-->
+    <h3>Micropost feed</h3>
     <ol class = 'microposts' >
         <%= render @feed_items %>
     </ol>
     <%= will_paginate @feed_items %>
+<%else%>
+     <h3>CREATE A POST!</h3>   
 <%end%>
 <!-- !@feed_items.nil? && -->
