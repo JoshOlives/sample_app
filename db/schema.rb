@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190225020953) do
+ActiveRecord::Schema.define(version: 20190320021004) do
 
   create_table "microposts", force: :cascade do |t|
     t.text "content"
@@ -30,6 +30,16 @@ ActiveRecord::Schema.define(version: 20190225020953) do
     t.index ["followed_id"], name: "index_relationships_on_followed_id"
     t.index ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true
     t.index ["follower_id"], name: "index_relationships_on_follower_id"
+  end
+
+  create_table "shares", force: :cascade do |t|
+    t.integer "shared_id"
+    t.integer "sharedpost_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["shared_id", "sharedpost_id"], name: "index_shares_on_shared_id_and_sharedpost_id", unique: true
+    t.index ["shared_id"], name: "index_shares_on_shared_id"
+    t.index ["sharedpost_id"], name: "index_shares_on_sharedpost_id"
   end
 
   create_table "users", force: :cascade do |t|

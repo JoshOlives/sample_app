@@ -8,11 +8,24 @@ what <#%= render @microposts does -->
         <%= micropost.content %> 
     </span>
     <span class="timestamp">
-        <!-- neat class and code below -->
+        <!-- neat class and code below, very much so, you should review it-->
         Posted <%= time_ago_in_words(micropost.created_at) %> ago.
         <% if current_user?(micropost.user) %>
-        <%= link_to 'delete', micropost, method: :delete,
-        data: { confirm: "You sure??" } %>
+            <%= link_to 'delete', micropost, method: :delete,
+            data: { confirm: "You sure??" } %>
+        <%end%>
+        <% unless current_user?(micropost.user) %>
+            <% if current_user.shared?(micropost) %>
+                <%= form_for(current_user.shares.find_by(sharedpost_id: micropost.id),
+                html: {method: :delete }) do |f| %>
+                    <%= f.submit "Unshare", class: "btn" %>
+                <%end%>
+            <%else%>
+                <%= form_for(current_user.shares.build) do |f| %>
+                    <div> <%= hidden_field_tag :sharedpost_id, micropost.id %> </div>
+                    <%= f.submit "Share", class: "btn btn-primary" %>
+                <%end%>
+            <%end%>
         <%end%>
     </span>
 </li>

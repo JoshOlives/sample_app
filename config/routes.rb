@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   #can copy and paste urls able to edit other users
   resources :users do#, :except => :update
     member do
-      get :following, :followers
+      get :following, :followers  #???
     end
   end
   resources :account_activations, only: [:edit]
@@ -26,4 +26,5 @@ Rails.application.routes.draw do
   #GONNA LEARN HOW TO MODIFY URL!!!
       # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :relationships, only: [:create, :destroy]
+  resources :shares, only: [:create, :destroy]
 end

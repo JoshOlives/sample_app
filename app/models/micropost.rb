@@ -1,5 +1,7 @@
 class Micropost < ApplicationRecord
   belongs_to :user
+  has_many :shares, foreign_key: "sharedpost_id", dependent: :destroy
+  has_many :sharers, through: :shares, source: :shared
   #creates a anonymous function in default_scope method?
   #is the proc called automatically when the method is ran?
   #go over taby ->
@@ -16,6 +18,9 @@ class Micropost < ApplicationRecord
                                                                   #automitically puts post object in front
   validate :picture_size
   
+  def shared_by?(user)
+    sharers.include?(user)
+  end
   private
   
   #validates the size of an uploader picture.

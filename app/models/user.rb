@@ -10,6 +10,10 @@ class User < ApplicationRecord
     has_many :following, through: :active_relationships, source: :followed
     has_many :followers, through: :passive_relationships #, source: :follower optional
     
+    #implentating shares
+    has_many :shares, foreign_key: "shared_id", dependent: :destroy
+    has_many :sharedposts, through: :shares
+    
     #order
     scope :activated, -> { where(activated: true) }
     default_scope -> { order(name: :asc) }
@@ -89,9 +93,12 @@ class User < ApplicationRecord
       #(following_ids = following.map(&:id)) == following_ids ;cause of active record
       #? does interpolation so you dont need to join array of ids into a string
    #more efficient cause doesnt have to pull everything into an array
-   following_ids = "SELECT followed_id FROM relationships
+    following_ids = "SELECT followed_id FROM relationships
                     WHERE follower_id = :user_id"
-   Micropost.where("user_id IN (#{following_ids}) OR user_id = :user_id", 
+    shared_micropost_ids = "SELECT sharedpost_id FROM shares
+                            WHERE shared_id IN (#{following_ids})" 
+   Micropost.where("user_id IN (#{following_ids}) OR user_id = :user_id 
+                    OR id IN (#{shared_micropost_ids})", 
                       user_id: id)
   end
     
@@ -125,6 +132,17 @@ class User < ApplicationRecord
       followers.include?(other_user)
     end
     
+    def share(micropost)
+      sharedposts << micropost
+    end
+    
+    def shared?(micropost)
+      sharedposts.include?(micropost)
+    end
+    
+    def unshare(micropost)
+      sharedposts.delete(micropost)
+    end
     
   def User.followjosh()
     a = User.find_by(email: "joshuaolivares@utexas.edu")

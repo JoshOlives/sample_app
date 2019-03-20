@@ -1,0 +1,4 @@
+<%= form_for(current_user.shares.find_by(sharedpost_id: micropost.id),
+        html: {method: :delete }) do |f| %>
+<%= f.submit "Unshare", class: "btn" %>
+<%end%>
