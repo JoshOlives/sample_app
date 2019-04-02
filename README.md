@@ -1,5 +1,5 @@
 # Ruby on Rails Tutorial sample application
-
+## *This project was transferred from Bitbucket to github.
 This is the sample application for
 [*Ruby on Rails Tutorial:
 Learn Web Development with Rails*](http://www.railstutorial.org/)
