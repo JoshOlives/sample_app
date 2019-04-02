@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
       # should i put remember/forget line here?
       return
     elsif logged_in? # if current_user = @user or @user is not in database
-      redirect_to current_user
+      redirect_to root_path #current_user
       params[:session][:remember_me] == '1' ? remember(current_user) : forget(current_user)
       return
     end
@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
         params[:session][:remember_me] == '1' ? remember(@user) : forget(@user)
       # this if statement is the same as
       #params[:session][:remember_me] == '1' ? remember(user) : forget(user)
-        redirect_back_or @user #short for user_path(user)
+        redirect_back_or root_path #@user #short for user_path(user)
       else
         message = 'Account not activated. '
         message += 'Check your email for the activation link.'
