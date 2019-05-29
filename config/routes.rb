@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   root 'static_pages#home' #needs action not url thats why home_path doesnt work
   get '/help', to: 'static_pages#help', as: 'help'
+  #as: changes name of path/url i.e help_path or help_url
   get '/about', to: 'static_pages#about'
   get '/contact', to: 'static_pages#contact'
   get '/signup', to: 'users#new'
