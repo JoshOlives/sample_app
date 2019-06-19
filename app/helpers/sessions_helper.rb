@@ -6,7 +6,7 @@ module SessionsHelper
   
   #returns the current logged-in user (if any)
   def current_user
-    if (id = session[:user_id]) #goes through is id is true
+    if (id = session[:user_id]) #goes through if id is true
       @current_user ||= User.find_by(id: id)
     elsif (id = cookies.signed[:user_id])
       user = User.find_by(id: id)

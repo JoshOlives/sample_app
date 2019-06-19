@@ -115,6 +115,7 @@ class User < ApplicationRecord
 
     #remember about self
     #follows a user.
+    #i guess << also saves
     def follow(other_user)
       following << other_user
     end

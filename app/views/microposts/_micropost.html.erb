@@ -10,7 +10,7 @@ what <#%= render @microposts does -->
     <span class="timestamp">
         <!-- neat class and code below, very much so, you should review it-->
         Posted <%= time_ago_in_words(micropost.created_at) %> ago.
-        <% if current_user?(micropost.user) %>
+        <% if current_user?(micropost.user) || current_user.admin? %>
             <%= link_to 'delete', micropost, method: :delete,
             data: { confirm: "You sure??" } %>
         <%end%>

@@ -10,6 +10,8 @@ class Micropost < ApplicationRecord
   
   #with lambda it reavulates the scope each time its called
   #without it doesnt
+  
+  #order by updated instead and update post when followed
   default_scope -> { order(created_at: :desc) }
   mount_uploader :picture, PictureUploader
   validates :user_id, presence: true
